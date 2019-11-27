@@ -26,7 +26,7 @@ def inicio():
 def index():
     """
         Comprueba si hay una sesion habierta:
-        sesion si-> Crea palabra y redirecciona a home.html
+        sesion si-> redirecciona a home.html
         sesion no -> Redirecciona al index
     """
     if session:
@@ -97,31 +97,7 @@ def home():
         Comprueba si hay una sesion abierta, si no la hay redirecciona a index.
     """
     if session:
-        if session['palabra'] == None:
-            session['palabra'] = player.palabra_aleatoria()
-        inicio = True
-        palabra = session['palabra']
-        print(palabra)
-        ocultada = []
-
-        if inicio:
-            for i in range(len(palabra)):
-                ocultada.append('_')
-                inicio = False
-        session['oculta'] = ocultada
-        if request.method == 'POST':
-            letra = request.form.get('letra')
-            intentos, ganado,  fin, letras_usu, ya_introducida, palabras_ok = player.inicio(
-                letra, palabra, ocultada)
-            context = {
-                'intentos': intentos,
-                'fin': fin,
-                'estaba': ya_introducida,
-                'letras': letras_usu,
-                'palabras_ok': palabras_ok,
-                'ganado': ganado
-            }
-            return render_template('home.html', **context)
+        # Aqui va la logica del ahorcado
         return render_template('home.html')
     else:
         return redirect('index')
