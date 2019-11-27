@@ -34,28 +34,31 @@ class Ahorcado:
         palabra = datos.query(query)
         return palabra[0][0]
 
+    def ocultar(self):
+        """
+            Oculta la plabra para mostrarsela al usuario
+        """
+        if session['inicio'] == True:
+            for i in range(len(session['palabra'])):
+                self.escondida.append('_')
+                session['inicio'] = False
+            session['escondida'] = self.escondida
+
     def inicio(self,palabra, letra ):
         """
             Este método recoje la letra introducida por el usuario en el input, la palabra random que se saca desde el main, y la palabra ya oculta
         """
         error = False
-
-        if session['inicio'] == True:
-            for i in range(len(palabra)):
-                self.escondida.append('_')
-            session['inicio'] = False
-
         if letra not in self.letras:
             for i in range(len(palabra)):
                 if palabra[i] not in self.letras:
                     if palabra[i] == letra:
                         self.escondida[i] = letra
                         self.letras.append(letra)
-                        
+
             if letra not in self.letras:
                 self.vidas -= 1
                 self.erroneas.append(letra)
-            else:
                 self.letras.append(letra)
         else:
             error = True
@@ -68,7 +71,6 @@ class Ahorcado:
             self.erroneas = []
             self.letras = []
 
-        session['escondida'] = self.escondida
         session['vidas'] = self.vidas
         session['erroneas'] = self.erroneas
         session['fin'] = self.fin

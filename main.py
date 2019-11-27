@@ -98,6 +98,7 @@ def home():
         Comprueba si hay una sesion abierta, si no la hay redirecciona a index.
     """
     if session:
+        player.ocultar()
         if request.method == 'POST':
             palabra = session['palabra']
             print(palabra)

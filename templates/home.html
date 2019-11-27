@@ -85,13 +85,14 @@
 
 {% endif %}
 
-{% if session.inicio == False %}
 <h1>Palabra Oculta: </h1>
 {% for i in range(session['oculta']|length)  %}
 
     {{ session['oculta'] }}
 
 {% endfor %}
+
+{% if session.inicio == False %}
 
 {% for i in range(session.escondida|length)  %}
 
