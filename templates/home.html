@@ -69,7 +69,7 @@
                 Bienvenido {{session['nombre']}} {{session['apellidos']}}
             </h1>
             <h2 class="subtitle">
-                Session: {{session['email']}} / {{session['password']}}
+                Session: {{session['email']}}
             </h2>
           </div>
         </div>
@@ -79,30 +79,27 @@
 
 {% block main %}
 
-
-{% if estaba %}
+{% if session.yaIntroducida %}
 
       <h1 style="color: red;">Esta Letra ya la ha introducido!!!</h1>
 
 {% endif %}
-{% for i in range(session.oculta|length)  %}
 
-    {{ session.oculta[i] }}
+{% if session.inicio == False %}
+<h1>Palabra Oculta: </h1>
+{% for i in range(session['oculta']|length)  %}
+
+    {{ session['oculta'] }}
+
+{% endfor %}
+
+{% for i in range(session.escondida|length)  %}
+
+    {{ session['escondida'][i] }}
 
 {% endfor %}
 
-<h1>Las letras introducidas son:</h1>
-{% for i in range(letras|length)  %}
-
-    {{ letras[i] }}
-
-{% endfor %}
-<h1>Letras que estan bien:</h1>
-{% for i in range(letras|length)  %}
-
-    {{ palabras_ok[i] }}
-
-{% endfor %}
+{% endif %}
 
 <form action="/home" method="post">
   <label for="letra">Introduce tu letra</label>
@@ -110,14 +107,15 @@
   <button class="button is-success">Probar</button>
 </form>
 
-{% if fin == True %}
 
-  <h1>Intentos: {{intentos}}</h1>
-  {% for i in range(usadas|length) %}
-      <h1>Letras usadas: {{usadas[i]}}</h1>
+{% if session.fin == False %}
+
+  <h1>Intentos: {{session.vidas}}</h1>
+  {% for i in range(session.todas_letras|length) %}
+      <h1>Letras usadas: {{session.todas_letras[i]}}</h1>
   {% endfor %}
 
-{% elif fin == False %}
+{% elif session.fin == True %}
 
   <h1>La palabra era: {{session.palabra}}</h1>
 

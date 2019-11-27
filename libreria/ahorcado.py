@@ -1,5 +1,6 @@
 import random
 import re
+from flask import session
 
 from libreria.conexion import Conexion
 
@@ -7,8 +8,13 @@ datos = Conexion('localhost', 'fran', 'Hello1234', 'practica_sesiones')
 
 
 class Ahorcado:
-   
-    def sacar_scores(self, email):
+    vidas = 8
+    escondida = []
+    erroneas = []
+    letras = []
+    fin = False
+
+    def scores(self, email):
         """
             Coge el email del usuario saca el nombre del usuario y sus puntuaciones de la base de datos.
         """
@@ -28,8 +34,43 @@ class Ahorcado:
         palabra = datos.query(query)
         return palabra[0][0]
 
-    def inicio(self):
+    def inicio(self,palabra, letra ):
         """
             Este método recoje la letra introducida por el usuario en el input, la palabra random que se saca desde el main, y la palabra ya oculta
         """
-        pass
+        error = False
+
+        if session['inicio'] == True:
+            for i in range(len(palabra)):
+                self.escondida.append('_')
+            session['inicio'] = False
+
+        if letra not in self.letras:
+            for i in range(len(palabra)):
+                if palabra[i] not in self.letras:
+                    if palabra[i] == letra:
+                        self.escondida[i] = letra
+                        self.letras.append(letra)
+                        
+            if letra not in self.letras:
+                self.vidas -= 1
+                self.erroneas.append(letra)
+            else:
+                self.letras.append(letra)
+        else:
+            error = True
+
+        if self.vidas <= 0:
+            self.fin = True
+            self.vidas = 8
+            session['inicio'] = True
+            self.escondida = []
+            self.erroneas = []
+            self.letras = []
+
+        session['escondida'] = self.escondida
+        session['vidas'] = self.vidas
+        session['erroneas'] = self.erroneas
+        session['fin'] = self.fin
+        session['yaIntroducida'] = error
+        session['todas_letras'] = self.letras

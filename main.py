@@ -30,6 +30,8 @@ def index():
         sesion no -> Redirecciona al index
     """
     if session:
+        session['inicio'] = True
+        session['palabra'] = player.palabra_aleatoria()
         return render_template('home.html')
     else:
         return render_template('index.html')
@@ -79,7 +81,6 @@ def login():
             if contra == usuario[0][1] and usuario[0][5] == 1:
                 session['nombre'] = usuario[0][2] + ' ' + usuario[0][3]
                 session['email'] = email
-                session['password'] = contra
                 session['palabra'] = player.palabra_aleatoria()
                 return redirect('home')
             else:
@@ -97,10 +98,14 @@ def home():
         Comprueba si hay una sesion abierta, si no la hay redirecciona a index.
     """
     if session:
-        # Aqui va la logica del ahorcado
-        return render_template('home.html')
-    else:
-        return redirect('index')
+        if request.method == 'POST':
+            palabra = session['palabra']
+            print(palabra)
+            letra = request.form.get('letra').upper()
+            player.inicio(palabra, letra)
+            return render_template('home.html')
+        else:
+            return redirect('index')
 
 
 @app.route('/salir')
