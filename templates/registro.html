@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+    {% block title %}
+        {{super()}}
+            Registro
+    {% endblock %}
+
+
+{% block header %}
+    <section class="hero is-info">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                  Registrate para poder gozar de nuestra pagina
+                </h1>
+                <h2 class="subtitle">
+                    Bienvenido, te cuidaremos mucho !!
+                </h2>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block main %}
+
+    {% if error %}
+        <h1>Este email ya existe en la base de datos !!</h1>
+    {% endif %}
+
+    <form action="/registro" method="post">
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id=""><br>
+
+        <label for="apellido1">Primer Apellido: </label>
+        <input type="text" name="apellido1"><br>
+
+        <label for="apellido2">Segundo Apellido: </label>
+        <input type="text" name="apellido2"><br>
+
+        <label for="telefono">Telefono:  </label>
+        <input type="text" name="tel"><br>
+
+        <label for="email">Email: </label>
+        <input class="imput is-round" type="email" name="email" id="" autofocus><br>
+
+        <label for="password">Password: </label>
+        <input class="imput is-round" type="password" name="contra" id=""><br><br>
+        <button class="button is-round" type="submit">Registrarme</button><br><br>
+    </form>
+{% endblock %}

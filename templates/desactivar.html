@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+    {% block title %}
+        {{super()}}
+        Seguro que quieres irte?
+    {% endblock %}
+
+{% block header %}  
+<section class="hero is-info">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+                Seguro que te quieres ir {{session['nombre']}} {{session['apellidos']}}???
+            </h1>
+            <h2 class="subtitle">
+                <a class="button is-danger" href="{{url_for('desactivar')}}">
+                    <strong>Eliminar Cuenta</strong>
+                  </a>
+                <a class="button is-danger" href="{{url_for('home')}}">
+                    <strong>Cancelar</strong>
+                  </a>
+            </h2>
+          </div>
+        </div>
+</section>
+{% endblock %}

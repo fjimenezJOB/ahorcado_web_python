@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+    {% block title %}
+        {{super()}}
+        Bienvenido
+    {% endblock %}
+
+{% block header %}
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{{url_for('home')}}">
+      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+    </a>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{{url_for('home')}}">
+        Home
+      </a>
+
+      <a class="navbar-item">
+        ##
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          Mas Opciones
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="{{url_for('seguro')}}">
+            Eliminar mi cuenta
+          </a>
+          <a class="navbar-item">
+            ##
+          </a>
+          <a class="navbar-item">
+            ##
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item">
+            ##
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-danger" href="{{url_for('salir')}}"">
+            <strong>Cerrar Sesión</strong>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<section class="hero is-info">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+                Bienvenido {{session['nombre']}} {{session['apellidos']}}
+            </h1>
+            <h2 class="subtitle">
+                Session: {{session['email']}} / {{session['password']}}
+            </h2>
+          </div>
+        </div>
+      </section>
+
+{% endblock %}
+
+{% block main %}
+
+
+{% if estaba %}
+
+      <h1 style="color: red;">Esta Letra ya la ha introducido!!!</h1>
+
+{% endif %}
+{% for i in range(session.oculta|length)  %}
+
+    {{ session.oculta[i] }}
+
+{% endfor %}
+
+<h1>Las letras introducidas son:</h1>
+{% for i in range(letras|length)  %}
+
+    {{ letras[i] }}
+
+{% endfor %}
+<h1>Letras que estan bien:</h1>
+{% for i in range(letras|length)  %}
+
+    {{ palabras_ok[i] }}
+
+{% endfor %}
+
+<form action="/home" method="post">
+  <label for="letra">Introduce tu letra</label>
+  <input type="text" name="letra" maxlength="1" autofocus required>
+  <button class="button is-success">Probar</button>
+</form>
+
+{% if fin == True %}
+
+  <h1>Intentos: {{intentos}}</h1>
+  {% for i in range(usadas|length) %}
+      <h1>Letras usadas: {{usadas[i]}}</h1>
+  {% endfor %}
+
+{% elif fin == False %}
+
+  <h1>La palabra era: {{session.palabra}}</h1>
+
+{% endif %}
+
+{% endblock %}

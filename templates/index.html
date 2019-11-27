@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+    {% block title %}
+        {{super()}}
+        Bienvenido
+    {% endblock %}
+
+{% block main %}
+
+<a class="button is-info" href="{{url_for('registro')}}"">
+    <strong>Registrarse</strong>
+  </a>
+  
+<a class="button is-success" href="{{url_for('login')}}"">
+    <strong>Log In</strong>
+  </a>
+{% endblock %}

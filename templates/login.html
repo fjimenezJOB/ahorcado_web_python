@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{super()}}
+        Login
+{% endblock %}
+{% block header %}
+<section class="hero is-info">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+               Inicia sesion para continuar
+            </h1>
+            <h2 class="subtitle">
+                Donde tus sueños se hacen realidad...
+            </h2>
+          </div>
+        </div>
+      </section>
+{% endblock %}
+
+{% block main %}
+    {% if error %}
+        <h1>Ha habido un error al iniciar sesion, intentalo de nuevo.</h1>
+    {% endif %}
+    {% if no_registrado %}
+        <h1>Parece que no estas registrado, registrate para iniciar sesion</h1>
+        <button class="button is-round" ><a href="{{url_for('registro')}}">Registate</a></button>
+
+    {% endif %}
+    <form action="/login" method="post">
+        <label for="email">Email: </label>
+        <input class="imput is-round" type="email" name="email" id="" autofocus><br>
+        <label for="password">Password: </label>
+        <input class="imput is-round" type="password" name="contra" id=""><br><br>
+        <button class="button is-round" type="submit">Entrar</button><br><br>
+    </form>
+{% endblock %}
